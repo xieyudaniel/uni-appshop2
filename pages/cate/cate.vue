@@ -74,57 +74,65 @@
 }
 </script>
 
-<style>
-  .scroll-view-container{
-      display:flex;
-  }
-  .left-scroll-view{
-    width: 150px;
-  }
-  .left-scroll-view-item{
-      width:150px;
-      line-height: 60px;
-      background-color: #f7f7f7;
-      text-align: center;
-      font-size: 12px;
-  }
-  .left-scroll-view-item:hover{
-        background-color: #ffffff;
-        position: relative;
-  }
-  .left-scroll-view-item:hover::before {
-      content: ' ';
-      display: block;
-      width: 3px;
-      height: 60px;
-      background-color: #c00000;
-      position: absolute;
-      left: 0px;
-      top: 50%;
-      transform: translateY(-50%);
-  }
-  .cate-lv2-title {
-    font-size: 12px;
-    font-weight: bold;
-    text-align: center;
-    padding: 15px 0;
-  }
-  .cate-lv3-list {
-    display: flex;
-    flex-wrap: wrap;
-    }
+<style lang="scss">
+ .scroll-view-container {
+   display: flex;
+ 
+   .left-scroll-view {
+     width: 120px;
+ 
+     .left-scroll-view-item {
+       line-height: 60px;
+       background-color: #f7f7f7;
+       text-align: center;
+       font-size: 12px;
+ 
+       // 激活项的样式
+       &.active {
+         background-color: #ffffff;
+         position: relative;
+ 
+         // 渲染激活项左侧的红色指示边线
+         &::before {
+           content: ' ';
+           display: block;
+           width: 3px;
+           height: 30px;
+           background-color: #c00000;
+           position: absolute;
+           left: 0;
+           top: 50%;
+           transform: translateY(-50%);
+         }
+       }
+     }
+   }
+ }
+.cate-lv2-title {
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px 0;
+}
+.cate-lv3-list {
+  display: flex;
+  flex-wrap: wrap;
+
   .cate-lv3-item {
     width: 33.33%;
     margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    }
-  .cate-lv3-item.image {
+
+    image {
       width: 60px;
       height: 60px;
     }
-  .cate-lv3-item.text {
-        font-size: 12px;
+
+    text {
+      font-size: 12px;
     }
+  }
+}
 </style>
