@@ -65,7 +65,6 @@ export default {
     		method:'GET',
         success: (res) => {
           this.swiperList = res.data.message
-          console.log("加载数据成功！")
         },
         fail: (err) => {
         },
@@ -77,7 +76,6 @@ export default {
     		method:'GET',
         success: (res) => {
           this.navList = res.data.message
-          console.log(this.navList)
         },
         fail: (err) => {
         },
@@ -94,7 +92,6 @@ export default {
             })
           })
           this.floorList = res.data.message
-          console.log(this.floorList)
         },
         fail: (err) => {
         },
