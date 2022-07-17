@@ -35,8 +35,8 @@
         </navigator>
         <!-- 右侧 4 个小图片的盒子 -->
         <view class="right-img-box">
-          <navigator class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2">
-            <navigator class="right-img-item" v-if="i2 != 0 " :url="item2.url">
+          <navigator open-type="switchTab" class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2" url="item2.url">
+            <navigator v-if="i2 !== 0" :url="item2.url">
               <image :src="item2.image_src" mode="widthFix" :style="{width: item2.image_width + 'rpx'}"></image>
             </navigator>
           </navigator>
@@ -54,6 +54,7 @@ export default {
       swiperList: [],
       navList:[],
       floorList: [],
+      goodsList:[]
     }
   },
   onLoad() {
@@ -85,21 +86,18 @@ export default {
         },
       });  
     },
+// 获取楼层列表数据
     async getFloorList() {
-      const {data: res} = await uni.request({
-    		url:'https://www.uinav.com/api/public/v1/home/floordata',
-    		method:'GET',
-        success: (res) => {
-          res.data.message.forEach(floor => {
-            floor.product_list.forEach(prod => {
-              prod.url = '/subpkg/goods_list/goods_list?' + prod.navigator_url.split('?')[1]
-            })
-          })
-          this.floorList = res.data.message
-        },
-        fail: (err) => {
-        },
-      });  
+      const { data: res } = await uni.$http.get('/api/public/v1/home/floordata')
+      if (res.meta.status !== 200) return uni.$showMsg()
+
+      // 通过双层 forEach 循环，处理 URL 地址
+      res.message.forEach(floor => {
+        floor.product_list.forEach(prod => {
+          prod.url = '/subpkg/goods_list/goods_list?' + prod.navigator_url.split('?')[1]
+        })
+      })
+      this.floorList = res.message
     },
     navClickHandler(item) {
       // 判断点击的是哪个 nav
@@ -112,6 +110,11 @@ export default {
     gotoSearch() {
       uni.navigateTo({
         url: '/subpkg/search/search'
+      })
+    },
+    gotoDetail(item) {
+      uni.navigateTo({
+        url: '/subpkg/goods_detail/goods_detail?goods_id=' + item.goods_id
       })
     }
     // 3. 获取轮播图数据的方法
